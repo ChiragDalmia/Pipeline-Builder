@@ -1,3 +1,5 @@
+"use client";
+
 // ui.js
 // Displays the drag-and-drop UI
 // --------------------------------------------------
@@ -57,7 +59,7 @@ export const PipelineUI = () => {
   } = useStore(selector, shallow);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
+    const nodeData = { id: nodeID, nodeType: `${type}` };
     return nodeData;
   };
 
@@ -93,7 +95,7 @@ export const PipelineUI = () => {
         addNode(newNode);
       }
     },
-    [reactFlowInstance, addNode, getNodeID] // ✅ fixed dependencies
+    [reactFlowInstance, addNode, getNodeID]
   );
 
   const onDragOver = useCallback((event) => {
@@ -103,7 +105,14 @@ export const PipelineUI = () => {
 
   return (
     <>
-      <div ref={reactFlowWrapper} style={{ width: "100vw", height: "70vh" }}>
+      <div
+        ref={reactFlowWrapper}
+        style={{
+          width: "100vw",
+          height: "70vh",
+          backgroundColor: "#ffffff",
+        }}
+      >
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -118,9 +127,29 @@ export const PipelineUI = () => {
           snapGrid={[gridSize, gridSize]}
           connectionLineType="smoothstep"
         >
-          <Background color="#aaa" gap={gridSize} />
-          <Controls />
-          <MiniMap />
+          <Background bgColor="#f7f9fb" />
+          <Controls
+            style={{
+              border: "1px solid #e0e0e0",
+              borderRadius: "8px",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              backgroundColor: "#ffffff",
+              overflow: "hidden",
+            }}
+          />
+          <MiniMap
+            style={{
+              border: "1px solid #e0e0e0",
+              borderRadius: "8px",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              backgroundColor: "#fafafa",
+              overflow: "hidden",
+            }}
+            maskColor="rgba(0, 0, 0, 0.05)"
+            nodeColor="#ffffff"
+            nodeStrokeColor="#d0d0d0"
+            nodeBorderRadius={4}
+          />
         </ReactFlow>
       </div>
     </>
