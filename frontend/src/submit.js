@@ -1,6 +1,31 @@
 "use client";
 
+import { useStore } from "./store";
+
 export const SubmitButton = () => {
+  const { nodes, edges } = useStore((state) => ({
+    nodes: state.nodes,
+    edges: state.edges,
+  }));
+
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/pipelines/parse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nodes, edges }),
+      });
+
+      const { num_nodes, num_edges, is_dag } = await res.json();
+      console.log({ num_nodes, num_edges, is_dag });
+      alert(
+        `Nodes: ${num_nodes}\nEdges: ${num_edges}\nDAG: ${is_dag ? "✓" : "✗"}`
+      );
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
+  };
+
   return (
     <div
       style={{
@@ -11,33 +36,19 @@ export const SubmitButton = () => {
       }}
     >
       <button
-        type="submit"
+        onClick={handleSubmit}
         style={{
           padding: "10px 24px",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#fff",
           border: "1.5px solid #d0d0d0",
           borderRadius: "8px",
           fontSize: "14px",
           fontWeight: "500",
-          color: "#1e1e1e",
           cursor: "pointer",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.08)",
-          transition: "all 0.2s ease",
+          transition: "all 0.2s",
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = "#f5f5f5";
-          e.currentTarget.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.12)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "#ffffff";
-          e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
-        }}
-        onMouseDown={(e) => {
-          e.currentTarget.style.transform = "translateY(1px)";
-        }}
-        onMouseUp={(e) => {
-          e.currentTarget.style.transform = "translateY(0)";
-        }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = "#fff")}
       >
         Submit
       </button>
