@@ -7,6 +7,8 @@ export const PipelineToolbar = () => {
     <div
       style={{
         padding: "16px",
+        display: "flex",
+        justifyContent: "center",
       }}
     >
       <div
