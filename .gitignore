@@ -12,3 +12,5 @@ backend/.env
 # Build outputs
 dist/
 build/
+
+*/venv
