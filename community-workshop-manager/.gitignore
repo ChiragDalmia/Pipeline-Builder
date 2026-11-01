@@ -1,0 +1,23 @@
+# Build output
+target/
+
+# Local H2 database files (recreated and reseeded on next start)
+data/
+*.mv.db
+*.trace.db
+*.lock.db
+
+# Maven wrapper download cache
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE and OS files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.DS_Store
+
+# Logs
+*.log
